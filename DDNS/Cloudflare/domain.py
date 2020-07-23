@@ -4,21 +4,30 @@ Created on 22.07.2020
 @author: Dennis
 '''
 
+import json
+
 class domain:
-    def __init__(self,create):
+    #newDomain: Create or Load, domainNo in case newDomain is true
+    def __init__(self,newDomain,domainNo=None):
         
-        if create == True:
-            self.createDomain()
+        if newDomain:
+            self.createNewDomain()
             
-        elif create == False:
-            importDomain()
+        elif not newDomain and domainNo is not None:
+            self.importDomain(domainNo)
+
         
-        
-   
-        
-    def createDomain(self):    
+    def createNewDomain(self):    
         
         self.domain = input("Enter Domain: ")
         self.xAuthKey = input("Enter xAuthKey: ")
         self.email = input("Enter E-Mail: ")
     
+    
+    
+    
+    
+    def importDomain(self,domainNo):
+        self.domain = ""
+        self.xAuthKey = ""
+        self.email = ""
