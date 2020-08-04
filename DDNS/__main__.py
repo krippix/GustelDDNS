@@ -6,6 +6,7 @@ Created on 23.07.2020
 
 from DDNS import app
 
+
 def main():
     app.DDNS()
     

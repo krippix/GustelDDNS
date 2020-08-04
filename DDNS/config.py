@@ -13,6 +13,8 @@ inifile = str(Path(__file__).parent.parent)+os.sep+'config.ini'
 
 
 
+def getDomainsJSON():
+    return "{}{}{}{}{}".format(Path(__file__).parent.parent, os.sep, "data", os.sep, "domains.json")
 
 def readinifile(section,option):
     parse = configparser.ConfigParser()

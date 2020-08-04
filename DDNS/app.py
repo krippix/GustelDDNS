@@ -11,6 +11,7 @@ from pathlib import Path
 #Project-Internal
 from DDNS.Cloudflare import domain
 from DDNS import config
+from DDNS.config import getDomainsJSON
 
 
 #Root location of python program
@@ -32,26 +33,27 @@ class DDNS:
     
         #Check for domains.json
         #domainsFilePath = str(projectRoot) + os.sep +'data'+ os.sep +'domains.json'
-        domainsFilePath = config.readinifile("domains", "domaindata")
-        print(domainsFilePath)
+        
         
         
         #Checks if domains.json exists, creates if not
-        if Path(domainsFilePath).exists():
+        logging.info("Checking for domains.json")
+        
+        if Path(getDomainsJSON()).exists():
             logging.info("domains.json found!")
         else:
             logging.warning("domains.json not found!")
             logging.info("Creating new domains.json")
             
             try:
-                domainsFile = open(domainsFilePath, "x")
+                domainsFile = open(getDomainsJSON(), "x")
                 logging.info("domains.json created!")
             except Exception as e:
                 logging.error("Failed to create domains.json: "+str(e))
                 exit()
             
+        domain.domain(True) #Calls class in domain.py
         
-        logging.info("Checking for domains.json")
         
         
         #TODO: load domains.json into list of domain-objects
