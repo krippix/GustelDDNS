@@ -11,6 +11,7 @@ from pathlib import Path
 
 from DDNS import config
 from DDNS import simpleTools
+from test.test_json import test_pass2
 
 #domainsFilePath = str(projectRoot) + os.sep +'data'+ os.sep +'domains.json'
 
@@ -66,21 +67,47 @@ class domain:
     def createNewDomain(self):    
         
         domain = input("Enter Domain: ")
-        #Cancel Creation if domain shouldnt be overwritten
-        if domain in self.domains_dict:
-            if not simpleTools.query_yes_no("{}{}".format(domain, "already Exists, do you want to override it?")):
-                print("Domain creation cancelled.")
-                exit()
-            
-        
-        
         recordType = input("Enter record Type: ")
         xAuthKey = input("Enter xAuthKey: ")
         email = input("Enter E-Mail: ")
+
+        #Check if domain already exists
+        if domain in self.domains_dict:
+            
+            #Check if RecordType is within existing domain
+            if recordType in self.domains_dict[domain]:
+                
+                #Y/N whether you want to overwrite
+                #Yes
+                if simpleTools.query_yes_no("{}{}{}{}{}".format("Record type: ",recordType, " already Exists for '",domain,"', do you want to override it?")):
+                    self.domains_dict[domain][recordType] = {'xAuthKey': xAuthKey, 'email': email}
+                
+                #No Overwriting
+                else:
+                    print("Domain creation cancelled.")
+                    exit()
+            
+            #Record Type doesen't exist yet
+            #Add Record type to domain
+            else:
+                self.domains_dict[domain][recordType] = {'xAuthKey': xAuthKey, 'email': email}
+        
+        #Domain doesen't exist | Add new domain
+        else:
+            #adds new Domain Data into list
+            self.domains_dict[domain]= {recordType: {'xAuthKey': xAuthKey, 'email': email}} 
+            
+            
+                
+            
+            
+            
         
         
         
-        self.domains_dict[domain]= {recordType: {'xAuthKey': xAuthKey, 'email': email}}
+        
+        
+        
         
             
         
