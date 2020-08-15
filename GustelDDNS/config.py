@@ -16,6 +16,26 @@ inifile = str(Path(__file__).parent.parent)+os.sep+'config.ini'
 def getDomainsJSON():
     return "{}{}{}{}{}".format(Path(__file__).parent.parent, os.sep, "data", os.sep, "domains.json")
 
+def checkDomainsJSON():
+    logging.info("Checking for domains.json")
+        
+    if Path(getDomainsJSON()).exists():
+        logging.info("domains.json found!")
+    else:
+        logging.warning("domains.json not found!")
+        createDomainsJSON()
+        
+            
+def createDomainsJSON():
+    logging.info("Creating new domains.json")
+        
+    try:
+        open(getDomainsJSON(), "x")
+        logging.info("domains.json created!")
+    except Exception as e:
+        logging.error("Failed to create domains.json: "+str(e))
+        exit()
+
 def readinifile(section,option):
     parse = configparser.ConfigParser()
     

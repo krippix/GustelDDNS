@@ -4,8 +4,9 @@ Created on 04.08.2020
 @author: Dennis
 '''
 
-import sys
 
+
+import sys
 
 def query_yes_no(question, default="yes"):
     """Ask a yes/no question via raw_input() and return their answer.
@@ -40,3 +41,13 @@ def query_yes_no(question, default="yes"):
         else:
             sys.stdout.write("Please respond with 'yes' or 'no' "
                              "(or 'y' or 'n').\n")
+            
+
+
+def removeSubDomains(domain):
+    #Removes all Subdomains
+    
+    domainList = domain.split(".")
+    domain_new = domainList[-2] +"."+ domainList[-1]
+
+    return domain_new

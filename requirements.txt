@@ -1,1 +1,1 @@
-No requirements yet.
+requests>=2.24.0
