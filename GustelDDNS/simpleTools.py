@@ -7,6 +7,8 @@ Created on 04.08.2020
 
 
 import sys
+import logging
+import requests
 
 def query_yes_no(question, default="yes"):
     """Ask a yes/no question via raw_input() and return their answer.
@@ -15,10 +17,9 @@ def query_yes_no(question, default="yes"):
     "default" is the presumed answer if the user just hits <Enter>.
         It must be "yes" (the default), "no" or None (meaning
         an answer is required of the user).
-
+/
     The "answer" return value is True for "yes" or False for "no".
     
-    Source: https://stackoverflow.com/questions/3041986/apt-command-line-interface-like-yes-no-input
     """
     valid = {"yes": True, "y": True, "ye": True,
              "no": False, "n": False}
@@ -43,11 +44,30 @@ def query_yes_no(question, default="yes"):
                              "(or 'y' or 'n').\n")
             
 
+def retrievePublicIPv4():
+    
+    try:
+        response = requests.get('https://ifconfig.io/ip')
+        
+        ipv4Address = str(response.text)
+        logging.info("Current Public IP: "+ipv4Address[0:-1])
+        
+        #Removing return from result
+        return ipv4Address[0:-1]
+        
+    except Exception as e:
+        logging.error("Failed to retrieve Public IP-address: "+str(e))
+
 
 def removeSubDomains(domain):
     #Removes all Subdomains
     
     domainList = domain.split(".")
-    domain_new = domainList[-2] +"."+ domainList[-1]
+    try:
+        domain_new = domainList[-2] +"."+ domainList[-1]
+    except Exception as e:
+        logging.error(str(e))
+        print("Invalid Domain. Program terminated.")
+        exit()
 
     return domain_new

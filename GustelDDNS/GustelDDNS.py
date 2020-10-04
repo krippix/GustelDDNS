@@ -16,26 +16,24 @@ import config
 
 
 def main():
-    #SET logginglevel
-        logging.basicConfig(level=logging.DEBUG)
 
-        #Checks if domains.json exists, creates if not
-        config.checkDomainsJSON()
-        
-        
-        print(sys.argv)
-        
-        
-        if sys.argv[1] == "-new":
-            domains.domains()
-        
-        
-        
-        
-        
-        #TODO: load domains.json into list of domain-objects
+
+    #Checks if domains.json exists, creates if not
+    config.checkDomainsJSON()
+    logging.info("test")
+    
+    print(sys.argv)
     
     
+    domains.domains()
+    
+    
+    
+    
+    
+    #TODO: load domains.json into list of domain-objects
+
+
 
 
 
