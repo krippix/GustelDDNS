@@ -1,4 +1,4 @@
-# Program to update Cloudflare DNS-entries.
+# GustelDDNS - README
 
 # Currently supported Launch parameters:
 
