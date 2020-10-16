@@ -22,6 +22,7 @@ Requirements:
 - [ ] Catching possible exceptions
 - [ ] *maybe* making it a Service
 - [ ] GUI(?)
+- [ ] email notifications
 
 ## DISCLAIMER
 As you can obvously can see, I have no idea how to code.
