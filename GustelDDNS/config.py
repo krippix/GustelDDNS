@@ -12,6 +12,10 @@ import configparser
 inifile = str(Path(__file__).parent.parent)+os.sep+'config.ini'
 
 
+def checkDataFolder():
+    Path("{}{}{}".format(Path(__file__).parent.parent, os.sep, "data")).mkdir(parents=True, exist_ok=True)
+    return
+
 
 def getDomainsJSON():
     return "{}{}{}{}{}".format(Path(__file__).parent.parent, os.sep, "data", os.sep, "domains.json")

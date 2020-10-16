@@ -17,10 +17,13 @@ import config
 
 def main():
 
-
+    #Check if Folder data exist, create if not
+    config.checkDataFolder()
+    
     #Checks if domains.json exists, creates if not
     config.checkDomainsJSON()
     logging.info("test")
+
     
     print(sys.argv)
     

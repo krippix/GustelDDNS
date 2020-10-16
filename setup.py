@@ -1,13 +1,12 @@
-from setuptools import setup
+import setuptools
 
-setup(name='GustelDDNS',
+setuptools.setup(name='GustelDDNS',
       version='0.1.0',
       description='',
-      author='',
-      author_email='',
+      author='krippix',
+      author_email='github@gustelgang.de',
       license='GPL-3',
+      url="https://github.com/krippix/GustelDDNS",
       install_requires=[],
-      entry_points={
-          'console_scripts': ['GustelDDNS=DDNS.__main__:main']
-      },
-      packages=['DDNS'])
+      packages=setuptools.find_packages()
+)
