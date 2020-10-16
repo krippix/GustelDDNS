@@ -22,10 +22,10 @@ def main():
     
     #Checks if domains.json exists, creates if not
     config.checkDomainsJSON()
-    logging.info("test")
+    #logging.info("test")
 
     
-    print(sys.argv)
+    #print(sys.argv)
     
     
     domains.domains()

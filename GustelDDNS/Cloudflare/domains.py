@@ -155,6 +155,7 @@ class domains:
                     logging.info("skipping '"+x+"', as no valid record was found.")
         
         
+        logging.info("-----------------")
         logging.info("Domain Updates finished. Exiting...")
         exit()
     
