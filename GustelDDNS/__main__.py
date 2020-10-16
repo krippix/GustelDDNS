@@ -8,6 +8,6 @@ if __name__ == '__main__':
 
     import GustelDDNS
     import logging
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
     logging.debug("MAIN")
     GustelDDNS.main()

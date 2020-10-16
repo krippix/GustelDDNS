@@ -9,6 +9,7 @@ Created on 04.08.2020
 import sys
 import logging
 import requests
+import time
 
 def query_yes_no(question, default="yes"):
     """Ask a yes/no question via raw_input() and return their answer.
@@ -46,18 +47,41 @@ def query_yes_no(question, default="yes"):
 
 def retrievePublicIPv4():
     
-    try:
-        response = requests.get('https://ifconfig.io/ip')
-        
+    errorCount = 0
+    
+    while True:
+        try:
+            response = requests.get('https://ifconfig.io/ipong')
+        except Exception as e:
+            logging.error("Failed to retrieve Public IP-address: "+str(e))
+            exit()
+            
+            
         ipv4Address = str(response.text)
         logging.info("Current Public IP: "+ipv4Address[0:-1])
-        
+            
         #Removing return from result
-        return ipv4Address[0:-1]
+        if str(response) == "<Response [200]>":
+            return ipv4Address[0:-1]
         
-    except Exception as e:
-        logging.error("Failed to retrieve Public IP-address: "+str(e))
-
+        elif errorCount < 8:
+            errorCount += 1
+            logging.error("Failed to retrieve IPv4 address "+errorCount+" times!")
+            logging.info("Waiting 15 Seconds until retry...")
+            time.sleep(15)
+            
+        elif errorCount < 10:
+            logging.error("Failed to retrieve IPv4 address "+errorCount+" times!")
+            logging.info("Waiting 5 Minutes until retry...")
+            time.sleep(300)
+            
+        else:
+            logging.error("Failed to retrieve IPv4 address "+errorCount+" times!")
+            logging.error("Exiting Program...")
+            
+            #TODO Send E-Mail about Failure
+            exit()
+            
 
 def removeSubDomains(domain):
     #Removes all Subdomains

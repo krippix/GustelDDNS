@@ -125,13 +125,16 @@ class domains:
         #Get every Record with DDNS = true
         data = self.loadDomains()
         
+        
+        #Get current Public IP
+        currentPubIPv4 = simpleTools.retrievePublicIPv4() 
+        
         #Get Domains
         for x in data:
             
-            logging.info("Checking Domain '"+x+"'")
+            logging.info("-----------------\nChecking Domain '"+x+"'")
             
-            #Get current Public IP
-            currentPubIPv4 = simpleTools.retrievePublicIPv4() 
+            
             
             #Get Records in Domain
             for y in data[x]:
@@ -159,6 +162,7 @@ class domains:
     def updateIPadress(self, xAuthKey, email, zoneID, recordID, domain, currentPubIPv4):
         #Updates IP of record
         
+        
         #Retrieve current IP of record
         headers = {
             'X-Auth-Email': email,
@@ -167,40 +171,40 @@ class domains:
         }
         
         
-        logging.info("Retrieving current Record-IP...")
+        logging.info(domain+" - Retrieving current Record-IP...")
         try:
             response = requests.get('https://api.cloudflare.com/client/v4/zones/'+zoneID+'/dns_records/'+recordID, headers=headers)
             logging.debug(str(response))  
             data = response.json()
         except Exception as e:
-            logging.error("Failed to retrieve Record-IP: "+e)
+            logging.error(domain+" - Failed to retrieve Record-IP: "+e)
         
         
         if str(response) == "<Response [200]>":
             #Check Retrieved IP-Address
             try:
                 recordIPv4 = str(data['result']['content'])
-                logging.info("Current Record IP: "+recordIPv4)
+                logging.info(domain+" - Current Record IP: "+recordIPv4)
             
             except Exception as e:
-                logging.error("Failed to retrieve current Record IPv4 address: "+str(e))
+                logging.error(domain+"- Failed to retrieve current Record IPv4 address: "+str(e))
                 return
   
         else:
-            logging.error("Failed to retrieve Record-IP: "+str(response))
+            logging.error(domain+" - Failed to retrieve Record-IP: "+str(response))
             return
         
         
 
         #Check if record IP matches current Public IP-Address
         if currentPubIPv4 == recordIPv4:
-            logging.info("IP address stays "+currentPubIPv4)
+            logging.info(domain+" - IP address stays "+currentPubIPv4)
             return
         
         #Attempt to update DNS-Record
         else:
             try:
-                logging.info("Updating Record IP...")
+                logging.info(domain+" - Updating Record IP...")
                 payload = {'type':'A','name': domain,'content': currentPubIPv4}
                 
                 response = requests.put('https://api.cloudflare.com/client/v4/zones/'+zoneID+'/dns_records/'+recordID, headers=headers, data = json.dumps(payload))
@@ -208,13 +212,13 @@ class domains:
                 logging.info(str(response))
                 
             except Exception as e:
-                logging.error("Failed to Update DNS-Record: "+str(e))
+                logging.error(domain+"- Failed to Update DNS-Record: "+str(e))
                 return
             
             if str(response) == "<Response [200]>":
                 logging.info("Success!")
             else:
-                logging.error("Updating failed: "+str(response))
+                logging.error(domain+" - Updating failed: "+str(response))
         
         
     
