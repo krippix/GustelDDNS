@@ -1,6 +1,6 @@
 # GustelDDNS - README
 
-# Currently supported Launch parameters:
+## Currently supported Launch parameters:
 
 Command | Description
 --------|------------
