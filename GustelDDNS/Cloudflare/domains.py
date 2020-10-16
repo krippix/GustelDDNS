@@ -201,10 +201,9 @@ class domains:
         else:
             try:
                 logging.info("Updating Record IP...")
-                payload = {'type':'A','name': 'minecraft.gustelgang.de','content': '8.8.4.4'}
+                payload = {'type':'A','name': domain,'content': currentPubIPv4}
                 
-                print(zoneID)
-                response = requests.post('https://api.cloudflare.com/client/v4/zones/'+zoneID+'/dns_records/'+recordID, headers=headers, data = json.dumps(payload))
+                response = requests.put('https://api.cloudflare.com/client/v4/zones/'+zoneID+'/dns_records/'+recordID, headers=headers, data = json.dumps(payload))
                 print(response.text)
                 logging.info(str(response))
                 
@@ -212,7 +211,7 @@ class domains:
                 logging.error("Failed to Update DNS-Record: "+str(e))
                 return
             
-            if response == "<Response [200]>":
+            if str(response) == "<Response [200]>":
                 logging.info("Success!")
             else:
                 logging.error("Updating failed: "+str(response))
